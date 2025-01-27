@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Pervoe</string>
+    <string name="button">Button</string>
+    <string name="name" />
+    <string name="surname" />
+    <string name="age" />
 </resources>
