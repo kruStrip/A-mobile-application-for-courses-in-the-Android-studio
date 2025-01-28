@@ -4,4 +4,5 @@
     <string name="name" />
     <string name="surname" />
     <string name="age" />
+    <string name="get_users" />
 </resources>

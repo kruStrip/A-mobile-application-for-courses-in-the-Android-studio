@@ -1,4 +1,4 @@
-package com.example.pervoe.presentation
+package com.example.pervoe.presentation.activities
 
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
@@ -8,10 +8,11 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.myapplication.domain.usecases.GetUsersUseCase
-import com.example.myapplication.presentaition.UserViewModelFactory
+import com.example.pervoe.presentation.viewmodelfactories.UserViewModelFactory
 import com.example.pervoe.R
 import com.example.pervoe.data.repositories.UserRepositoryImpl
 import com.example.pervoe.databinding.ActivityMainBinding
+import com.example.pervoe.presentation.viewmodel.UserViewModel
 import kotlinx.coroutines.launch
 
 @Suppress("UNREACHABLE_CODE")
@@ -35,14 +36,13 @@ class MainActivity : AppCompatActivity() {
         val viewModelFactory = UserViewModelFactory(getUsersUseCase)
 
         userViewModel = ViewModelProvider(this, viewModelFactory)[UserViewModel::class.java]
-
-        lifecycleScope.launch {
-            userViewModel.users.collect() { users ->
-                activityMainBinding.nameId.text = users.joinToString("/n") { it.name }
-                activityMainBinding.surnameId.text = users.joinToString("/n") { it.surname }
-                activityMainBinding.ageId.text = users.joinToString("/n") { it.age.toString() }
+        activityMainBinding.buttonId.setOnClickListener {
+            lifecycleScope.launch {
+                userViewModel.users.collect() { users ->
+                    activityMainBinding.nameId.text = users.joinToString("/n") { it.name }
+                }
+                userViewModel.fetchUsers()
             }
-            userViewModel.fetchUsers()
-        }}
-
+        }
+    }
 }
